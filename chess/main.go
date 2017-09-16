@@ -131,6 +131,7 @@ func (b *Board) AllowedMoveKnight(pos [2]int) []string{
 			moves = append(moves, step)
 		}
 	}
+	LOG.Debugf("Allowed steps %s", moves)
 	return moves
 }
 

@@ -91,9 +91,25 @@ func TestBoard_AllowedMoveKnight(t *testing.T) {
 		t.Fatalf("Expected 2 step from [%d, %d]", 0, 0)
 	}
 	a1 := []string{"Nb3", "Nc2"}
+	checkSteps(t, a1, moves)
+	moves = board.AllowedMoveKnight([2]int{7,7})
+	h8 := []string{"Ng6", "Nf7"}
+	checkSteps(t, h8, moves)
+	moves = board.AllowedMoveKnight([2]int{3,3})
+	d4 := []string{"Nc6", "Ne6", "Nf5", "Nf3", "Ne2", "Nc2", "Nb3", "Nb5"}
+	checkSteps(t, d4, moves)
+	moves = board.AllowedMoveKnight([2]int{0,7})
+	a8 := []string{"Nb6", "Nc7"}
+	checkSteps(t, a8, moves)
+	moves = board.AllowedMoveKnight([2]int{1,1})
+	b2 := []string{"Na4", "Nc4", "Nd3", "Nd1"}
+	checkSteps(t, b2, moves)
+}
+
+func checkSteps(t *testing.T, allowed []string, moves []string){
 	for _, s := range moves{
-		if !contains(a1, s){
-			t.Fatalf("Unexpected allowed step %s for KNIGHT", s)
+		if !contains(allowed, s){
+			t.Fatalf("Allowed steps %s. Unexpected step %s for KNIGHT", allowed, s)
 		}
 	}
 }
