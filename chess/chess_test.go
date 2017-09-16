@@ -74,12 +74,35 @@ func TestBoard_EmptyCell(t *testing.T) {
 
 func TestBoard_FullCell(t *testing.T) {
 	board := NewBoard()
-	board.Put([2]int{3,3}, KNIGHT)
-	figure, err := board.FullCell([2]int{3,3})
-	if err != nil{
+	board.Put([2]int{3, 3}, KNIGHT)
+	figure, err := board.FullCell([2]int{3, 3})
+	if err != nil {
 		t.Fatalf("Unexpecter error %s", err.Error())
 	}
 	if "Nd4" != figure {
 		t.Fatalf("Expected 'Nd4', but actual %s", figure)
 	}
+}
+
+func TestBoard_AllowedMoveKnight(t *testing.T) {
+	board := NewBoard()
+	moves := board.AllowedMoveKnight([2]int{0, 0})
+	if len(moves) != 2 {
+		t.Fatalf("Expected 2 step from [%d, %d]", 0, 0)
+	}
+	a1 := []string{"Nb3", "Nc2"}
+	for _, s := range moves{
+		if !contains(a1, s){
+			t.Fatalf("Unexpected allowed step %s for KNIGHT", s)
+		}
+	}
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }

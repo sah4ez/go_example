@@ -4,7 +4,6 @@ import (
 	"github.com/op/go-logging"
 	"fmt"
 	"errors"
-	"github.com/docker/distribution/notifications"
 )
 
 const KNIGHT = "N"
@@ -122,17 +121,14 @@ func (b *Board) FullCell(pos [2]int) (string, error) {
 	return format(b.area[pos[0]][pos[1]], pos[0] ,pos[1]) , nil
 }
 
-func format(figure string, letter int, number int) string{
-	return figure + LETTERS[letter] + fmt.Sprintf("%d", number+1)
-}
-
 func (b *Board) AllowedMoveKnight(pos [2]int) []string{
 	moves := []string{}
 	for _, p := range KNIGHT_MOVES{
 		newPos := moveOffset(pos, p)
 		b, _ := ValidPos(newPos)
 		if b {
-			append(moves, )
+			step :=  format(KNIGHT, newPos[0], newPos[1])
+			moves = append(moves, step)
 		}
 	}
 	return moves
@@ -150,4 +146,8 @@ func ValidPos(pos [2]int) (bool, error){
 		return false, errors.New("invalid position")
 	}
 	return true, nil
+}
+
+func format(figure string, letter int, number int) string{
+	return figure + LETTERS[letter] + fmt.Sprintf("%d", number+1)
 }
